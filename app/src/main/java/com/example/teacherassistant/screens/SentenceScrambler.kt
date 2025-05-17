@@ -72,6 +72,11 @@ fun SentenceScrambler(modifier: Modifier = Modifier) {
         )
         LazyColumn(modifier = modifier.padding(bottom = 43.dp)) {
             items(sentences) { sentence ->
+                val displayedText = if (onChangeClick) {
+                    scrambledSentence(sentence)
+                } else {
+                    scrambledSentence(sentence)
+                }
                 Row(
                     modifier
                         .fillMaxWidth()
@@ -80,11 +85,7 @@ fun SentenceScrambler(modifier: Modifier = Modifier) {
                     horizontalArrangement = Arrangement.Center
                 ) {
                     TextField(
-                        value = if (onChangeClick) {
-                            scrambledSentence(sentence)
-                        } else {
-                            scrambledSentence(sentence)
-                        },
+                        value = displayedText,
                         onValueChange = {
                             Toast.makeText(
                                 context,
@@ -96,7 +97,7 @@ fun SentenceScrambler(modifier: Modifier = Modifier) {
                     )
                     Spacer(modifier.width(12.dp))
                     Button(onClick = {
-                        clipboardManager.setText(annotatedString = AnnotatedString(sentence))
+                        clipboardManager.setText(annotatedString = AnnotatedString(displayedText))
                     }) { Text("copy") }
                 }
             }
